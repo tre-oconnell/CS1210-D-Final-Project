@@ -6,7 +6,7 @@ CS1210-D
 """
 import random
 
-def fill_background(bg):
+def create_background(bg):
     for i in range (10):
         row = []
         for i in range(20):
@@ -16,6 +16,23 @@ def fill_background(bg):
             elif x > 0.2:
                 row.append(0)
         bg.append(row)
+"""        
+#def complete_background(bg):
+    #left and right check
+    for row in background:
+        for ind, each in enumerate(row):
+            if each != 'B':
+                try:
+                    if row[ind - 1] == 'B':
+                        row[ind] += 1
+                    if row(ind + 1) == 'B':
+                        row[ind] += 1
+                except: 
+                    IndexError
+    #up and down check
+    
+    #diagonal check
+"""
 
 display = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -30,3 +47,4 @@ display = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 
 background = []
 
+create_background(background)
