@@ -6,6 +6,14 @@ CS1210-D
 """
 import random
 
+import tkinter
+import customtkinter  # <- import the CustomTkinter module
+
+
+
+def button_function():
+    print("button pressed")
+
 def create_background(bg):
     for _ in range (10):
         row = []
@@ -57,30 +65,30 @@ def create_background(bg):
                             bg[row_num][row_ind] += 1
                 except:
                     IndexError
+                    
+def create_display(disp):
+    for _ in range(10):
+        row = []
+        for __ in range(20):
+            row.append('')
+        disp.append(row)
 
-
-display = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-
+display = []
 background = []
 
 create_background(background)
-"""
-for ind, row in enumerate(bg):
-    for row_ind, row_val in enumerate(row):
-        try:
-            if (ind - 1)[row_ind] == 'B':
-                ind[row_ind] += 1
-            if (ind + 1)[row_ind] == 'B':
-                ind[row_ind] += 1
-        except:
-            IndexError
-"""
+create_display(display)
+
+root_tk = tkinter.Tk()  # create the Tk window like you normally do
+root_tk.geometry("1600x880")
+root_tk.title("Minesweeper")
+
+button = customtkinter.CTkButton(master=root_tk, corner_radius=0, command=button_function)
+button.place(relx=0.1, rely=0.5, anchor=tkinter.CENTER)
+
+for i in range(10):  # Rows
+    for j in range(20):  # Columns
+        button = tkinter.Button(root_tk, text = display[i][j])
+        button.grid(row=i, column=j, padx=5, pady=5)
+
+root_tk.mainloop()
