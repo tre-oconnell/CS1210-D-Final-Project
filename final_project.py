@@ -9,6 +9,10 @@ import random
 import tkinter
 import customtkinter  # <- import the CustomTkinter module
 
+root_tk = tkinter.Tk()  # create the Tk window like you normally do
+root_tk.geometry("1600x880")
+root_tk.title("Minesweeper")
+
 
 
 def reveal(row, column):
@@ -75,6 +79,15 @@ def create_display(disp):
         for __ in range(20):
             row.append('')
         disp.append(row)
+def create_buttons(bttns):
+    for i in range(10):  # Rows
+        row_buttons = []  # Create a list to store buttons in each row
+        for j in range(20):  # Columns
+            button = tkinter.Button(root_tk, text=display[i][j], height = 2, width = 1)
+            button.grid(row=(i + 1), column=j)
+            button.config(command=lambda i=i, j=j: reveal(i, j))
+            row_buttons.append(button)  # Append button to row_buttons
+        bttns.append(row_buttons)  # Append row_buttons to buttons
 
 display = []
 background = []
@@ -82,21 +95,9 @@ buttons = []
 
 create_background(background)
 create_display(display)
+create_buttons(buttons)
 
-root_tk = tkinter.Tk()  # create the Tk window like you normally do
-root_tk.geometry("1600x880")
-root_tk.title("Minesweeper")
-
-button = customtkinter.CTkButton(master = root_tk, corner_radius = 0)
-button.place(relx = 0.1, rely= 0.5, anchor = tkinter.CENTER)
-
-for i in range(10):  # Rows
-    row_buttons = []  # Create a list to store buttons in each row
-    for j in range(20):  # Columns
-        button = tkinter.Button(root_tk, text=display[i][j])
-        button.grid(row=(i + 1), column=j, padx=5, pady=5)
-        button.config(command=lambda i=i, j=j: reveal(i, j))
-        row_buttons.append(button)  # Append button to row_buttons
-    buttons.append(row_buttons)  # Append row_buttons to buttons
+restart_button = tkinter.Button(root_tk, text='Restart', height = 2, width = 10)
+restart_button.grid(row=(11), column=5, columnspan=4)
 
 root_tk.mainloop()
