@@ -11,8 +11,11 @@ import customtkinter  # <- import the CustomTkinter module
 
 
 
-def button_function():
-    print("button pressed")
+def reveal(row, column):
+    display[row][column] = background[row][column]
+    button = buttons[row][column]
+    button.config(text = display[row][column])
+    print(display)
 
 def create_background(bg):
     for _ in range (10):
@@ -40,9 +43,9 @@ def create_background(bg):
     #up and down check 
     for row_num, row in enumerate(bg):
         for row_ind, row_val in enumerate(row):
-            if row_val != 'B' and row_num - 1 >= 0:
+            if row_val != 'B':
                 try:
-                    if bg[row_num - 1][row_ind] == 'B':
+                    if bg[row_num - 1][row_ind] == 'B' and row_num - 1 >= 0:
                         bg[row_num][row_ind] += 1
                     if bg[row_num + 1][row_ind] == 'B':
                         bg[row_num][row_ind] += 1
@@ -75,6 +78,7 @@ def create_display(disp):
 
 display = []
 background = []
+buttons = []
 
 create_background(background)
 create_display(display)
@@ -83,12 +87,16 @@ root_tk = tkinter.Tk()  # create the Tk window like you normally do
 root_tk.geometry("1600x880")
 root_tk.title("Minesweeper")
 
-button = customtkinter.CTkButton(master=root_tk, corner_radius=0, command=button_function)
-button.place(relx=0.1, rely=0.5, anchor=tkinter.CENTER)
+button = customtkinter.CTkButton(master = root_tk, corner_radius = 0)
+button.place(relx = 0.1, rely= 0.5, anchor = tkinter.CENTER)
 
 for i in range(10):  # Rows
+    row_buttons = []  # Create a list to store buttons in each row
     for j in range(20):  # Columns
-        button = tkinter.Button(root_tk, text = display[i][j])
-        button.grid(row=i, column=j, padx=5, pady=5)
+        button = tkinter.Button(root_tk, text=display[i][j])
+        button.grid(row=(i + 1), column=j, padx=5, pady=5)
+        button.config(command=lambda i=i, j=j: reveal(i, j))
+        row_buttons.append(button)  # Append button to row_buttons
+    buttons.append(row_buttons)  # Append row_buttons to buttons
 
 root_tk.mainloop()
