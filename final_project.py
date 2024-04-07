@@ -9,9 +9,12 @@ import random
 import tkinter
 import customtkinter  # <- import the CustomTkinter module
 
-root_tk = tkinter.Tk()  # create the Tk window like you normally do
+root_tk = tkinter.Tk()
 root_tk.geometry("1600x880")
 root_tk.title("Minesweeper")
+
+restart_button = tkinter.Button(root_tk, text='Restart', height = 2, width = 10, command = lambda: restart())
+restart_button.grid(row=(11), column=5, columnspan=4)
 
 
 
@@ -20,6 +23,7 @@ def reveal(row, column):
     button = buttons[row][column]
     button.config(text = display[row][column])
     print(display)
+
 
 def create_background(bg):
     for _ in range (10):
@@ -84,20 +88,29 @@ def create_buttons(bttns):
         row_buttons = []  # Create a list to store buttons in each row
         for j in range(20):  # Columns
             button = tkinter.Button(root_tk, text=display[i][j], height = 2, width = 1)
-            button.grid(row=(i + 1), column=j)
+            button.grid(row=(i), column=j)
             button.config(command=lambda i=i, j=j: reveal(i, j))
             row_buttons.append(button)  # Append button to row_buttons
         bttns.append(row_buttons)  # Append row_buttons to buttons
+
+def start():
+    global display, background, buttons
+    create_background(background)
+    create_display(display)
+    create_buttons(buttons)
+
+def restart():
+    global display, background, buttons
+    display = []
+    background = []
+    buttons = []
+    start()
 
 display = []
 background = []
 buttons = []
 
-create_background(background)
-create_display(display)
-create_buttons(buttons)
+if __name__ == '__main__':
+    start()
 
-restart_button = tkinter.Button(root_tk, text='Restart', height = 2, width = 10)
-restart_button.grid(row=(11), column=5, columnspan=4)
-
-root_tk.mainloop()
+    root_tk.mainloop()
